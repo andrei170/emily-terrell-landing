@@ -16,28 +16,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
-  /* NOTE: Brand colours below are estimated from available public surfaces.
-     Emily Terrell's exact palette will be confirmed and locked on Day 1 of the install.
-     Final site uses Emily's confirmed brand colours, fonts, and photography. */
   :root{
-    --bg-deep:#0c0f0e;
-    --bg-elev:#141918;
-    --bg-card:rgba(20,26,23,0.75);
-    --accent:#2d6a4f;
-    --accent-bright:#40916c;
-    --accent-light:#52b788;
+    --bg-deep:#060d2a;
+    --bg-elev:#0d1538;
+    --bg-card:rgba(13,21,56,0.75);
+    --accent:#ff2e64;
+    --accent-bright:#e10072;
+    --accent-light:#ff5585;
     --text-primary:#f0f4f1;
-    --text-secondary:#b7c4bb;
-    --text-muted:#7a8c80;
-    --border:rgba(64,145,108,0.18);
-    --border-strong:rgba(64,145,108,0.42);
-    --accent-soft:rgba(64,145,108,0.08);
+    --text-secondary:#b7bcd4;
+    --text-muted:#7a82a0;
+    --border:rgba(255,46,100,0.18);
+    --border-strong:rgba(255,46,100,0.42);
+    --accent-soft:rgba(255,46,100,0.08);
     --gold:#c9973a;
     --gold-bright:#e0ab4a
   }
   html{scroll-behavior:smooth}
   body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg-deep);color:var(--text-primary);line-height:1.6;overflow-x:hidden}
-  body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 10% 0%,rgba(64,145,108,0.07),transparent 50%),radial-gradient(circle at 90% 100%,rgba(64,145,108,0.05),transparent 50%);pointer-events:none;z-index:0}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 10% 0%,rgba(255,46,100,0.07),transparent 50%),radial-gradient(circle at 90% 100%,rgba(255,46,100,0.05),transparent 50%);pointer-events:none;z-index:0}
   .container{max-width:1100px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
   .container-narrow{max-width:780px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
   h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;letter-spacing:-0.01em;line-height:1.15}
@@ -53,8 +50,14 @@
   .hero-sub{font-size:18px;color:var(--text-secondary);max-width:680px;margin:0 auto 32px;line-height:1.65;text-align:center;text-wrap:pretty}
   .hero-meta{text-align:center;margin:0 auto 40px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-muted)}
   .hero-meta span{margin:0 14px}
-  .colour-note{text-align:center;font-size:11px;color:var(--text-muted);font-style:italic;margin:0 auto 32px;max-width:620px;line-height:1.55;letter-spacing:0.03em}
-  .cta-primary{display:inline-block;padding:18px 44px;background:var(--accent);color:#fff;border-radius:3px;font-size:14px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:all 0.3s ease;box-shadow:0 12px 30px rgba(64,145,108,0.22)}
+  .video-label{text-align:center;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .video-wrap{position:relative;padding-bottom:56.25%;margin:0 auto 14px;max-width:880px;border-radius:6px;overflow:hidden;border:1px solid var(--border-strong);box-shadow:0 30px 80px rgba(0,0,0,0.6);background:linear-gradient(135deg,#0d1538,#060d2a)}
+  .video-poster{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at center,rgba(255,46,100,0.18),transparent 60%),linear-gradient(135deg,#0d1538,#060d2a)}
+  .video-poster .play-btn{position:absolute;width:84px;height:84px;border-radius:50%;background:rgba(255,46,100,0.92);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 40px rgba(255,46,100,0.5);transition:all 0.3s ease;border:3px solid rgba(255,255,255,0.95)}
+  .video-poster .play-btn::after{content:"";display:block;width:0;height:0;border-style:solid;border-width:14px 0 14px 24px;border-color:transparent transparent transparent #fff;margin-left:6px}
+  .video-poster .video-source-label{position:absolute;bottom:14px;right:18px;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-secondary);background:rgba(0,0,0,0.65);padding:6px 12px;border-radius:2px}
+  .video-note{font-size:12px;color:var(--text-muted);font-style:italic;letter-spacing:0.04em;margin:0 auto 32px;max-width:680px;line-height:1.55}
+  .cta-primary{display:inline-block;padding:18px 44px;background:var(--accent);color:#fff;border-radius:3px;font-size:14px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:all 0.3s ease;box-shadow:0 12px 30px rgba(255,46,100,0.22)}
   .cta-primary:hover{background:var(--accent-bright);transform:translateY(-2px)}
   section{padding:80px 0}
   .section-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent-light);margin-bottom:18px;text-align:center}
@@ -125,7 +128,14 @@
 <h1>AI for real estate, built for agents who want it to <em>actually work.</em></h1>
 <p class="hero-sub">A practical five-module system for real estate agents who are done watching tutorials and want AI running inside their real workflow - listings, lead follow-up, CMAs, market reports, and outreach - before the end of the week.</p>
 <p class="hero-meta"><span>Self-Paced</span>·<span>Lifetime Access</span>·<span>Full Prompt Library Included</span></p>
-<p class="colour-note">Note · This is a sample page built by AG1 Consulting. Brand colours and photography are confirmed with Emily on Day 1 of the install and locked before the live version goes live.</p>
+<div class="video-label">A Word From Emily · @coachemilyterrell</div>
+<div class="video-wrap" role="presentation" aria-label="Explainer video - @coachemilyterrell AI Realtor System">
+<div class="video-poster">
+<div class="play-btn"></div>
+<span class="video-source-label">Explainer Video · AI Realtor System</span>
+</div>
+</div>
+<p class="video-note">Explainer video from @coachemilyterrell drops in here on Day 1 of the install. Swap to your custom 4-min VSL before the page goes live.</p>
 <a href="#enrol" class="cta-primary">Enrol Now</a>
 </div>
 </section>
@@ -154,7 +164,7 @@
 </div>
 </section>
 
-<section style="background:linear-gradient(180deg,transparent,rgba(64,145,108,0.04),transparent)">
+<section style="background:linear-gradient(180deg,transparent,rgba(255,46,100,0.04),transparent)">
 <div class="container">
 <div class="section-eyebrow">The Work</div>
 <h2 class="section-title">Five modules. <em>One week to implement.</em></h2>
@@ -219,15 +229,15 @@
 </div>
 </section>
 
-<section style="background:linear-gradient(180deg,transparent,rgba(64,145,108,0.04),transparent)">
+<section style="background:linear-gradient(180deg,transparent,rgba(255,46,100,0.04),transparent)">
 <div class="container">
 <div class="section-eyebrow">What Agents Are Saying</div>
 <h2 class="section-title">The proof is in the workflow, <em>not the page.</em></h2>
 <p class="section-intro">Placeholder receipts for the AI Realtor System cohort. Real agent results swap in after the first cohort completes. The deeper proof is in the coaching practice and the live conference testing Emily has been running for two years.</p>
 <div class="receipts-wall">
-<div class="receipt">"Finally the RE-specific prompts. I tried four different AI courses and none of them knew how a CMA actually works. Module 4 alone saved me six hours this week."<span class="name">- RE agent, [city to be confirmed]</span></div>
-<div class="receipt">"The follow-up module is the one I needed. I was manually writing every follow-up email. Module 3 is now running my pipeline and I have not touched it in two weeks."<span class="name">- RE agent, [city to be confirmed]</span></div>
-<div class="receipt">"I went to the AI-for-RE conference, bought the course the same day, ran the implementation sprint that week. Every module is in my workflow. Best two hours I spent on a course this year."<span class="name">- RE agent, [city to be confirmed]</span></div>
+<div class="receipt">"Finally the RE-specific prompts. I tried four different AI courses and none of them knew how a CMA actually works. Module 4 alone saved me six hours this week."<span class="name">- RE agent, residential market</span></div>
+<div class="receipt">"The follow-up module is the one I needed. I was manually writing every follow-up email. Module 3 is now running my pipeline and I have not touched it in two weeks."<span class="name">- RE agent, active buyer pipeline</span></div>
+<div class="receipt">"I went to the AI-for-RE conference, bought the course the same day, ran the implementation sprint that week. Every module is in my workflow. Best two hours I spent on a course this year."<span class="name">- RE agent, luxury residential</span></div>
 </div>
 <p class="receipts-note">Placeholder receipts. Real cohort testimonials swap in after the first 5-day implementation sprint cohort completes.</p>
 </div>
@@ -250,7 +260,7 @@
 </div>
 </section>
 
-<section id="enrol" style="background:linear-gradient(180deg,transparent,rgba(64,145,108,0.04),transparent)">
+<section id="enrol" style="background:linear-gradient(180deg,transparent,rgba(255,46,100,0.04),transparent)">
 <div class="container-narrow">
 <div class="section-eyebrow">Enrol</div>
 <h2 class="section-title">Join the next cohort.</h2>
@@ -258,7 +268,8 @@
 <div class="form-frame">
 <h3>AI Realtor System · Enrolment</h3>
 <p>Let us know where you are in your RE workflow and we will make sure the right module is your Day 1 start.</p>
-<p style="color:var(--text-muted);font-size:13px;margin-top:8px;font-style:italic;">[Enrolment form embeds here on the live version - Typeform or direct Stripe checkout link]</p>
+<a href="https://calendly.com/ag-copy/call-with-andrei" target="_blank" class="cta-primary" style="display:inline-block;margin:24px 0">Book your enrolment call</a>
+<p style="font-size:14px;opacity:0.7;margin-top:12px">15-minute call. Direct access to the course on approval. No setter calls, no back-and-forth.</p>
 <p class="price-hint">Two tiers available · Standard access and Premium with personal AI Readiness Audit · Pricing confirmed on the form</p>
 </div>
 </div>
@@ -279,7 +290,7 @@
 <footer>
 <div class="container">
 <p class="footer-meta">AI Realtor System · Emily Terrell · 2026</p>
-<p class="footer-disclaimer">Sample landing page built by AG1 Consulting. Brand colours, photography, and final copy confirmed with Emily Terrell on Day 1 of the install.</p>
+<p class="footer-disclaimer">Sample landing page built by AG1 Consulting. Photography and final copy confirmed with Emily Terrell on Day 1 of the install.</p>
 </div>
 </footer>
 
