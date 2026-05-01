@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Realtor System · Emily Terrell</title>
+<meta name="description" content="The practical AI system for real estate agents. Five modules, a full prompt library, and a 5-day implementation sprint. Built by a working RE coach and AI strategist.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="AI Realtor System · Emily Terrell">
+<meta property="og:description" content="AI for real estate, built for agents who want it to actually work.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://andrei170.github.io/emily-terrell-landing/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  /* NOTE: Brand colours below are estimated from available public surfaces.
+     Emily Terrell's exact palette will be confirmed and locked on Day 1 of the install.
+     Final site uses Emily's confirmed brand colours, fonts, and photography. */
+  :root{
+    --bg-deep:#0c0f0e;
+    --bg-elev:#141918;
+    --bg-card:rgba(20,26,23,0.75);
+    --accent:#2d6a4f;
+    --accent-bright:#40916c;
+    --accent-light:#52b788;
+    --text-primary:#f0f4f1;
+    --text-secondary:#b7c4bb;
+    --text-muted:#7a8c80;
+    --border:rgba(64,145,108,0.18);
+    --border-strong:rgba(64,145,108,0.42);
+    --accent-soft:rgba(64,145,108,0.08);
+    --gold:#c9973a;
+    --gold-bright:#e0ab4a
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg-deep);color:var(--text-primary);line-height:1.6;overflow-x:hidden}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 10% 0%,rgba(64,145,108,0.07),transparent 50%),radial-gradient(circle at 90% 100%,rgba(64,145,108,0.05),transparent 50%);pointer-events:none;z-index:0}
+  .container{max-width:1100px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+  .container-narrow{max-width:780px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+  h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;letter-spacing:-0.01em;line-height:1.15}
+  nav{position:fixed;top:0;left:0;right:0;padding:16px 0;background:rgba(12,15,14,0.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);z-index:100}
+  .nav-inner{display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:0 auto;padding:0 28px}
+  .logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:0.04em;color:var(--text-primary)}
+  .nav-cta{padding:10px 22px;background:var(--accent);color:#fff;border-radius:2px;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;transition:background 0.3s ease}
+  .nav-cta:hover{background:var(--accent-bright)}
+  .hero{padding:130px 0 50px;text-align:center}
+  .eyebrow{display:inline-block;padding:8px 18px;background:var(--accent-soft);border:1px solid var(--border-strong);border-radius:100px;font-size:11px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent-light);margin-bottom:28px}
+  .hero h1{font-size:clamp(38px,5.5vw,68px);line-height:1.1;margin:0 auto 20px;max-width:880px;text-align:center;text-wrap:balance}
+  .hero h1 em{color:var(--accent-bright);font-style:italic;font-weight:400}
+  .hero-sub{font-size:18px;color:var(--text-secondary);max-width:680px;margin:0 auto 32px;line-height:1.65;text-align:center;text-wrap:pretty}
+  .hero-meta{text-align:center;margin:0 auto 40px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-muted)}
+  .hero-meta span{margin:0 14px}
+  .colour-note{text-align:center;font-size:11px;color:var(--text-muted);font-style:italic;margin:0 auto 32px;max-width:620px;line-height:1.55;letter-spacing:0.03em}
+  .cta-primary{display:inline-block;padding:18px 44px;background:var(--accent);color:#fff;border-radius:3px;font-size:14px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;transition:all 0.3s ease;box-shadow:0 12px 30px rgba(64,145,108,0.22)}
+  .cta-primary:hover{background:var(--accent-bright);transform:translateY(-2px)}
+  section{padding:80px 0}
+  .section-eyebrow{font-size:11px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent-light);margin-bottom:18px;text-align:center}
+  .section-title{font-size:clamp(32px,4.5vw,52px);margin-bottom:18px;text-align:center}
+  .section-title em{color:var(--accent-bright);font-style:italic;font-weight:400}
+  .section-intro{font-size:17px;color:var(--text-secondary);max-width:680px;margin:0 auto 56px;line-height:1.65;text-align:center}
+  .section-intro strong{color:var(--text-primary);font-weight:600}
+  .who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1000px;margin:0 auto}
+  @media(max-width:760px){.who-grid{grid-template-columns:1fr}}
+  .who-card{padding:36px 28px;background:var(--bg-card);border:1px solid var(--border);border-radius:3px}
+  .who-card .num{font-family:'Cormorant Garamond',serif;font-size:48px;color:var(--accent-light);font-weight:600;line-height:1;margin-bottom:12px}
+  .who-card h3{font-size:21px;margin-bottom:12px;color:var(--text-primary)}
+  .who-card p{color:var(--text-secondary);font-size:14px;line-height:1.7}
+  .pillar-list{max-width:880px;margin:0 auto}
+  .pillar{padding:36px 32px;background:var(--bg-card);border:1px solid var(--border);border-radius:3px;margin-bottom:18px}
+  .pillar .pillar-num{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--accent-light);text-transform:uppercase;letter-spacing:0.16em;margin-bottom:10px;font-weight:600}
+  .pillar h3{font-size:26px;margin-bottom:14px;color:var(--text-primary)}
+  .pillar .outcome{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--accent-bright);font-style:italic;line-height:1.4;margin-bottom:14px}
+  .pillar p{color:var(--text-secondary);font-size:15px;line-height:1.7}
+  .work-note{margin:48px auto 0;padding:24px 28px;max-width:780px;text-align:center;font-style:italic;color:var(--text-secondary);font-size:15px;line-height:1.7;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .founder-block{display:flex;flex-direction:column;gap:36px;max-width:880px;margin:0 auto;align-items:center}
+  .founder-text{width:100%;text-align:left}
+  .founder-text .name-loc{font-size:13px;color:var(--accent-light);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px}
+  .founder-text h3{font-size:32px;margin-bottom:18px}
+  .founder-text .key-quote{font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--text-primary);font-style:italic;line-height:1.4;margin-bottom:24px;padding:18px 22px;border-left:3px solid var(--accent-light);background:var(--accent-soft)}
+  .founder-text p{color:var(--text-secondary);font-size:15px;line-height:1.75;margin-bottom:14px}
+  .founder-text .key-statement{font-weight:600;color:var(--text-primary);font-size:16px;margin:18px 0;line-height:1.6}
+  .founder-text ul{list-style:none;padding:0;margin:18px 0 0 0}
+  .founder-text li{padding:6px 0;color:var(--text-secondary);font-size:14px;border-bottom:1px solid var(--border)}
+  .founder-text li:last-child{border-bottom:0}
+  .founder-text li::before{content:"·";color:var(--accent-light);margin-right:10px;font-weight:bold}
+  .founder-text .trust-badge{display:inline-block;margin-top:20px;padding:8px 14px;background:var(--accent-soft);border:1px solid var(--border-strong);border-radius:100px;font-size:12px;color:var(--accent-light);letter-spacing:0.08em}
+  .receipts-wall{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1080px;margin:0 auto}
+  @media(max-width:760px){.receipts-wall{grid-template-columns:1fr}}
+  .receipt{padding:28px 24px;background:var(--bg-card);border:1px solid var(--border);border-radius:3px;font-style:italic;color:var(--text-secondary);font-size:14px;line-height:1.65}
+  .receipt .name{display:block;margin-top:14px;font-style:normal;color:var(--accent-light);font-size:13px;letter-spacing:0.06em;font-weight:600}
+  .receipts-note{text-align:center;margin-top:36px;font-size:13px;color:var(--text-muted);font-style:italic;max-width:680px;margin-left:auto;margin-right:auto;line-height:1.7}
+  .faq{max-width:780px;margin:0 auto}
+  .faq-item{padding:26px 0;border-bottom:1px solid var(--border)}
+  .faq-item h3{font-size:20px;margin-bottom:12px;color:var(--text-primary)}
+  .faq-item p{color:var(--text-secondary);font-size:15px;line-height:1.7}
+  .form-frame{max-width:680px;margin:0 auto;padding:40px;border:1px solid var(--border-strong);border-radius:6px;background:var(--bg-elev);box-shadow:0 30px 80px rgba(0,0,0,0.5)}
+  .form-frame h3{font-size:26px;margin-bottom:8px;text-align:center}
+  .form-frame p{color:var(--text-secondary);font-size:14px;text-align:center;margin-bottom:24px}
+  .price-hint{display:inline-block;margin-top:14px;font-size:13px;color:var(--text-muted);font-style:italic;letter-spacing:0.04em}
+  .final-cta-section{text-align:center;padding:100px 0}
+  .final-cta-section h2{font-size:clamp(32px,4vw,46px);margin-bottom:24px;max-width:780px;margin-left:auto;margin-right:auto}
+  .final-cta-section h2 em{color:var(--accent-bright);font-style:italic;font-weight:400}
+  .final-cta-section p{font-size:17px;color:var(--text-secondary);max-width:580px;margin:0 auto 36px;line-height:1.65}
+  .final-cta-section .tagline{margin-top:48px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:24px;color:var(--text-primary)}
+  .application-note{font-size:13px;color:var(--text-muted);margin-top:18px;letter-spacing:0.06em;font-style:italic}
+  footer{padding:40px 0;border-top:1px solid var(--border);text-align:center;color:var(--text-muted);font-size:13px}
+  footer .footer-meta{font-size:12px;letter-spacing:0.04em}
+  footer .footer-disclaimer{margin-top:14px;font-size:11px;color:var(--text-muted);font-style:italic}
+</style>
+</head>
+<body>
+<nav>
+<div class="nav-inner">
+<div class="logo">AI Realtor System</div>
+<a href="#enrol" class="nav-cta">Enrol</a>
+</div>
+</nav>
+
+<section class="hero">
+<div class="container">
+<div class="eyebrow">AI Realtor System · A Course By Emily Terrell</div>
+<h1>AI for real estate, built for agents who want it to <em>actually work.</em></h1>
+<p class="hero-sub">A practical five-module system for real estate agents who are done watching tutorials and want AI running inside their real workflow - listings, lead follow-up, CMAs, market reports, and outreach - before the end of the week.</p>
+<p class="hero-meta"><span>Self-Paced</span>·<span>Lifetime Access</span>·<span>Full Prompt Library Included</span></p>
+<p class="colour-note">Note · This is a sample page built by AG1 Consulting. Brand colours and photography are confirmed with Emily on Day 1 of the install and locked before the live version goes live.</p>
+<a href="#enrol" class="cta-primary">Enrol Now</a>
+</div>
+</section>
+
+<section>
+<div class="container">
+<div class="section-eyebrow">Who This Is For</div>
+<h2 class="section-title">If you've heard the AI talk, <em>and you're still using the same tools you had before it.</em></h2>
+<div class="who-grid">
+<div class="who-card">
+<div class="num">01</div>
+<h3>The Agent With a Full Pipeline</h3>
+<p>You are handling 15-25+ transactions per year. Your workflow runs, but it runs on your time. AI can handle three or four hours of your week. This course shows you exactly which three or four hours and how to set it up.</p>
+</div>
+<div class="who-card">
+<div class="num">02</div>
+<h3>The Agent Who Tried AI and Stopped</h3>
+<p>You downloaded ChatGPT, used it twice, and went back to your old process because nobody showed you the RE-specific prompts. Module 1 of the AI Realtor System is the setup you never got.</p>
+</div>
+<div class="who-card">
+<div class="num">03</div>
+<h3>The Coach or Team Lead</h3>
+<p>You are advising agents on AI adoption and you want to recommend something you have personally verified. The AI Realtor System was built from live testing inside real transactions, not from a tutorial.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section style="background:linear-gradient(180deg,transparent,rgba(64,145,108,0.04),transparent)">
+<div class="container">
+<div class="section-eyebrow">The Work</div>
+<h2 class="section-title">Five modules. <em>One week to implement.</em></h2>
+<p class="section-intro">No theory, no demos, no generic AI content. Every module is built around a specific RE workflow task and ships with the prompts to run it immediately.</p>
+<div class="pillar-list">
+<div class="pillar">
+<div class="pillar-num">Module One · AI Tool Selection for Real Estate</div>
+<h3>The Right Stack for RE Workflows</h3>
+<p class="outcome">By the end of Module 1, you have the right 3-4 tools selected for your specific transaction volume and workflow, and you understand why the generic AI setups do not work for active agents.</p>
+<p>Not the 47-tool roundup. The specific tools tested inside real estate transactions - listings, buyer communication, transaction coordination - with a selection framework based on your transaction volume and where you are leaking the most time right now.</p>
+</div>
+<div class="pillar">
+<div class="pillar-num">Module Two · Prompt Engineering for Listings and Outreach</div>
+<h3>The Prompts That Work in Real RE Copy</h3>
+<p class="outcome">By the end of Module 2, you have a saved prompt library covering listing descriptions, buyer outreach, follow-up emails, and objection responses - all tested in live transactions and ready to use Monday morning.</p>
+<p>The formula behind prompts that produce listing descriptions agents actually use without rewriting, follow-up emails that sound like the agent wrote them, and buyer communication that matches the professional register your clients expect. 50+ prompts included in the library.</p>
+</div>
+<div class="pillar">
+<div class="pillar-num">Module Three · Lead Nurturing Automation With AI</div>
+<h3>Follow-Up That Runs Without You</h3>
+<p class="outcome">By the end of Module 3, you have a personalised follow-up sequence running for your current pipeline that does not require you to write each message from scratch.</p>
+<p>How to build a follow-up sequence that adapts to the lead's stage, property type, and communication style without hiring a VA. The segment-and-personalise method used by agents handling 30+ active leads without dropping any.</p>
+</div>
+<div class="pillar">
+<div class="pillar-num">Module Four · AI-Powered CMA and Market Reports</div>
+<h3>CMA Prep in Under 15 Minutes</h3>
+<p class="outcome">By the end of Module 4, your CMA prep workflow runs in under 15 minutes and your market reports go out on schedule instead of getting pushed because they take too long to write.</p>
+<p>The research and writing workflow that cuts CMA prep from 90 minutes to under 15, and the market report format that clients actually read because it is specific to their neighbourhood, not a generic data dump.</p>
+</div>
+<div class="pillar">
+<div class="pillar-num">Module Five · Implementation Sprint</div>
+<h3>Five Days to a Running System</h3>
+<p class="outcome">By the end of Day 5 of the sprint, every module from the course is live inside your real workflow - not set up in a test environment, running on actual transactions and actual client communication.</p>
+<p>A structured day-by-day installation guide that takes each module from "watched the video" to "running in my actual business." Most agents finish the sprint before the weekend of the week they start.</p>
+</div>
+</div>
+<p class="work-note">Lifetime access to module video, prompt library, and all templates. The prompt library updates as AI tools change - you get the updated prompts without paying again.</p>
+</div>
+</section>
+
+<section>
+<div class="container">
+<div class="section-eyebrow">About Emily</div>
+<h2 class="section-title">From RE agent to RE business coach. <em>Now: the AI implementation course.</em></h2>
+<div class="founder-block">
+<div class="founder-text">
+<div class="name-loc">Emily Terrell · Real Estate Business Coach · AI Strategist</div>
+<h3>About Emily</h3>
+<div class="key-quote">"The agents who are going to win the next five years started using AI in their workflow six months ago. <em>This course is the starting point for everyone else.</em>"</div>
+<p>Emily Terrell is a real estate business coach and AI strategy consultant working with agents at every stage of their practice. She has spent two years testing AI tools inside real estate transactions - not in demos, in live listings, active buyer pipelines, and real client communication - and built the AI Realtor System from what actually works.</p>
+<p class="key-statement">The course is built from 1,418 posts, hundreds of coaching conversations, and two years of live testing inside real RE workflows. Not from a tutorial.</p>
+<ul>
+<li>Real estate business coach, @coachemilyterrell</li>
+<li>AI strategy consultant for RE professionals</li>
+<li>Speaker on AI adoption in real estate</li>
+<li>Active blog at coachemilyterrell.com</li>
+<li>Two years of live AI testing inside real transactions</li>
+</ul>
+<span class="trust-badge">Top AI-for-RE Speaker · @coachemilyterrell</span>
+</div>
+</div>
+</div>
+</section>
+
+<section style="background:linear-gradient(180deg,transparent,rgba(64,145,108,0.04),transparent)">
+<div class="container">
+<div class="section-eyebrow">What Agents Are Saying</div>
+<h2 class="section-title">The proof is in the workflow, <em>not the page.</em></h2>
+<p class="section-intro">Placeholder receipts for the AI Realtor System cohort. Real agent results swap in after the first cohort completes. The deeper proof is in the coaching practice and the live conference testing Emily has been running for two years.</p>
+<div class="receipts-wall">
+<div class="receipt">"Finally the RE-specific prompts. I tried four different AI courses and none of them knew how a CMA actually works. Module 4 alone saved me six hours this week."<span class="name">- RE agent, [city to be confirmed]</span></div>
+<div class="receipt">"The follow-up module is the one I needed. I was manually writing every follow-up email. Module 3 is now running my pipeline and I have not touched it in two weeks."<span class="name">- RE agent, [city to be confirmed]</span></div>
+<div class="receipt">"I went to the AI-for-RE conference, bought the course the same day, ran the implementation sprint that week. Every module is in my workflow. Best two hours I spent on a course this year."<span class="name">- RE agent, [city to be confirmed]</span></div>
+</div>
+<p class="receipts-note">Placeholder receipts. Real cohort testimonials swap in after the first 5-day implementation sprint cohort completes.</p>
+</div>
+</section>
+
+<section>
+<div class="container">
+<div class="section-eyebrow">FAQ</div>
+<h2 class="section-title">Common questions, <em>before enrolling.</em></h2>
+<div class="faq">
+<div class="faq-item"><h3>Do I need to be tech-savvy to use this course?</h3><p>No. The course is built for agents who know their RE workflow but are new to AI. Module 1 starts with tool selection from scratch. If you can use a CRM and write an email, you can run every module in this course.</p></div>
+<div class="faq-item"><h3>How fast will I see results?</h3><p>Most agents install Module 2 (listing prompts) within the first two days of enrolment and use the prompts on their next active listing. The full implementation sprint takes five days. Most agents are running all five modules before the end of the sprint week.</p></div>
+<div class="faq-item"><h3>Will this work for my specific market?</h3><p>Yes. The prompts and systems are built around RE workflow tasks - listing copy, follow-up, CMA, market reports - that apply regardless of market. The prompt library includes examples across residential, luxury, and commercial-adjacent RE contexts.</p></div>
+<div class="faq-item"><h3>What is the time commitment?</h3><p>Each module is approximately 30-45 minutes of video content plus the implementation time for that module's prompts and templates. The full five-day sprint is designed for agents with a full pipeline - not a block-out-your-calendar commitment.</p></div>
+<div class="faq-item"><h3>What is the investment?</h3><p>Two tiers are available. Standard tier includes full curriculum, prompt library, templates, and lifetime access. Premium tier adds a personal AI Readiness Audit from Emily - a direct review of your current RE workflow with the three highest-ROI AI integrations identified for your specific practice. Pricing confirmed on the enrolment form.</p></div>
+<div class="faq-item"><h3>Is this for buyers' agents, listing agents, or both?</h3><p>Both. The prompt library covers buyer communication, listing copy, CMA, and market reports. Modules 1-2 weight toward listing agents. Module 3 weights toward agents with large buyer pipelines. Module 4 is relevant to any agent who writes CMAs or market reports.</p></div>
+<div class="faq-item"><h3>What if I'm already using some AI tools?</h3><p>Module 1 includes a diagnostic for agents who are already using AI but not getting consistent results. If you are already running prompts, Module 1 helps you identify the gaps in the current setup before Modules 2-5 build on top of it.</p></div>
+<div class="faq-item"><h3>Refund policy?</h3><p>Complete Module 1 and the Day 1 implementation sprint, decide it is not for you, full refund within 7 days of enrolment. No questions asked.</p></div>
+</div>
+</div>
+</section>
+
+<section id="enrol" style="background:linear-gradient(180deg,transparent,rgba(64,145,108,0.04),transparent)">
+<div class="container-narrow">
+<div class="section-eyebrow">Enrol</div>
+<h2 class="section-title">Join the next cohort.</h2>
+<p class="section-intro">Four-minute enrolment form. Lifetime access on submit. The implementation sprint starts whenever you are ready.</p>
+<div class="form-frame">
+<h3>AI Realtor System · Enrolment</h3>
+<p>Let us know where you are in your RE workflow and we will make sure the right module is your Day 1 start.</p>
+<p style="color:var(--text-muted);font-size:13px;margin-top:8px;font-style:italic;">[Enrolment form embeds here on the live version - Typeform or direct Stripe checkout link]</p>
+<p class="price-hint">Two tiers available · Standard access and Premium with personal AI Readiness Audit · Pricing confirmed on the form</p>
+</div>
+</div>
+</section>
+
+<section>
+<div class="container-narrow">
+<div class="final-cta-section">
+<h2>The agents using AI in their workflow right now are not <em>working harder.</em></h2>
+<p>They are running the same pipeline with four fewer hours of manual work per week. The AI Realtor System is the structured five-day path to get there. Enrolment is open now.</p>
+<a href="#enrol" class="cta-primary">Enrol Now</a>
+<p class="application-note">Lifetime access · Prompt library included · Implementation sprint starts Day 1</p>
+<p class="tagline">AI for real estate. <em>Built to run.</em></p>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="container">
+<p class="footer-meta">AI Realtor System · Emily Terrell · 2026</p>
+<p class="footer-disclaimer">Sample landing page built by AG1 Consulting. Brand colours, photography, and final copy confirmed with Emily Terrell on Day 1 of the install.</p>
+</div>
+</footer>
+
+</body>
+</html>
